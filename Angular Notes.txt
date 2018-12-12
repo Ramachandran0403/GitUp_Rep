@@ -1,0 +1,22 @@
+instal angular comand line - npm install @angular/cli -g
+npm install - dependncy Packages
+ng serve - Build & creating server
+
+Code . to open VS Code from CMD
+ng generate component UI/my-component-name
+ng generate service service/my-service-name
+
+ng build --prod
+
+
+git remote add origin https://github.com/Ramachandran0403/TaskManager.git
+
+git push -u origin master
+
+Jenkin
+gnramachandran
+Rajaram1!
+
+GIT
+ramachandran0403
+rajaram1!

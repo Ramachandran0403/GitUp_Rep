@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+ 
+    stages {
+        stage('Downloading Code') {
+            steps {
+               git credentialsId: 'c7de6632-0bee-4b04-ba6f-de722f9272e4', url: 'https://github.com/Ramachandran0403/TaskManager.git'
+            }
+        }
+        stage('Nuget Installation'){
+            steps {
+                bat 'C:/Nuget/nuget.exe restore TaskManager/TaskManagerService/TaskManagerService.sln'
+            }
+        }
+        stage('API + TestCases Build'){
+            steps {
+                bat "\"${tool 'MSBUILD'}\" TaskManager/TaskManagerService/TaskManagerService.sln /p:Configuration=Release /p:Platform=\"Any CPU\" /p:ProductVersion=1.0.0.${env.BUILD_NUMBER}"
+            }
+        }
+        stage('Installing Angular Dependencies') {
+            steps {
+                dir('C:/Program Files (x86)/Jenkins/workspace/TaskManager/TaskManagerUI') {
+                    bat 'node --version'
+                    bat 'npm --v'
+                    bat 'npm install'
+                }
+            }
+        }
+        stage('Angular Build') {
+            steps {
+                dir('C:/Program Files (x86)/Jenkins/workspace/TaskManager/TaskManagerUI') {
+                    bat 'npm run ng --build'
+                }
+            }
+        }
+    }
+}
